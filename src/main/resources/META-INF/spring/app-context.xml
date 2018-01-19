@@ -1,0 +1,45 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd         
+		http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+        
+	<description>Spring configuration for ControlCentre</description>
+
+	<!-- tells Spring to scan the codebase for dependency requirements, -->
+	<context:annotation-config/> 
+	
+	<!-- tells Spring to scan the code for injectable beans under the package (and all its subpackages) specified -->
+	<context:component-scan base-package="com.groovyfly.controlcentre" /> 
+	
+	<!-- pages -->
+	
+	<bean id="HomePage" class="com.groovyfly.controlcentre.client.HomePage" />
+	
+	<bean id="MultiOrderPage" class="com.groovyfly.controlcentre.client.orders.MultiOrderPage" scope="prototype" />
+	
+	<bean id="SingleOrderPage" class="com.groovyfly.controlcentre.client.orders.SingleOrderPage" scope="prototype" />
+	
+	<bean id="NewsFeedPage" class="com.groovyfly.controlcentre.client.sitemanagement.newsfeed.NewsFeedPage" scope="prototype" />
+	
+	<bean id="WebPageManagementPage" class="com.groovyfly.controlcentre.client.sitemanagement.pages.WebPageManagementPage" scope="prototype" />
+	
+	<bean id="EditWebPagePage" class="com.groovyfly.controlcentre.client.sitemanagement.pages.EditWebPagePage" scope="prototype" />
+	
+	<bean id="ProductsPage" class="com.groovyfly.controlcentre.client.productmanagement.ProductsPage" scope="prototype" />
+	
+	<bean id="BlobstoreViewerPage" class="com.groovyfly.controlcentre.client.sitemanagement.gae.BlobstoreViewerPage" scope="prototype" />
+	
+	<bean id="CapabilityCheckPage" class="com.groovyfly.controlcentre.client.sitemanagement.gae.CapabilityCheckPage" scope="prototype" />
+	
+	<!-- reports -->
+	
+	<bean id="SalesReportMonthly" class="com.groovyfly.controlcentre.client.reports.financial.SalesReportMonthly" scope="prototype" />
+
+</beans>

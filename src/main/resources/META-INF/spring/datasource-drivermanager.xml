@@ -1,0 +1,90 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc
+        http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+        http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/tx    
+        http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<description>The file is dedicated to JDBC datasource configuration.</description>
+
+	<!-- Database connection properties -->
+	<context:property-placeholder location="META-INF/spring/jdbc-local.properties, META-INF/spring/gae-local.properties"/>
+
+	<!-- Configures a DataSource with database connection properties -->
+    <bean id="dataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName">
+            <value>${jdbc.driverClassName}</value>
+        </property>
+        <property name="url">
+            <value>${jdbc.url}</value>
+        </property>
+        <property name="username">
+            <value>${jdbc.username}</value>
+        </property>
+        <property name="password">
+            <value>${jdbc.password}</value>
+        </property>
+    </bean>
+    	
+	<bean id="GoogleAppEngineProperties"
+        class="com.groovyfly.controlcentre.client.config.GoogleAppEngineProperties">
+        <property name="server">
+            <value>${gae.server}</value>
+        </property>
+        <property name="port">
+            <value>${gae.port}</value>
+        </property>
+        <property name="username">
+            <value>${gae.username}</value>
+        </property>
+        <property name="password">
+            <value>${gae.password}</value>
+        </property>
+    </bean>
+    
+    <!-- Define transaction manager to be used by -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="emf"/>
+    </bean>
+    
+    <!-- Define how transaction manager will be configured. In this case looking for annotations -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+    
+    <!-- Define and configure the EntityManagerFactory that is to be used. In this case we use Hibernate as the persistence provider with MySQL database -->
+    <!-- By defining this we are allowing spring to manage the life cycle of the EntityManager as it would be in a J2E managed container -->
+    <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    
+    	<!-- Configures a DataSource -->
+        <property name="dataSource" ref="dataSource" />
+        
+        <!-- Defines the underlying persistence provider -->
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+        
+        <!-- New to Spring 3.1 we can scan for annotation to inject EntityManager -->
+        <property name="packagesToScan" value="com.groovyfly.controlcentre"/>
+        
+        <!-- Configure the underlying persistence provider -->
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.MySQLDialect
+                </prop>
+                <prop key="hibernate.max_fetch_depth">3</prop>
+                <prop key="hibernate.jdbc.fetch_size">50</prop>
+                <prop key="hibernate.jdbc.batch_size">10</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>

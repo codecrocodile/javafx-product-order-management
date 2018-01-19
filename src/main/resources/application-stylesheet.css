@@ -1,0 +1,26 @@
+.root{
+    -fx-base: #CEE5F9;
+    -fx-background-image: url("META-INF/images/satinweave.png");
+    
+}
+
+.split-pane{
+    -fx-background-image: url("META-INF/images/satinweave.png");
+    
+}
+
+.highlightedBackground {
+    -fx-background-image: url("META-INF/images/ps_neutral.png");
+}
+
+.menu-bar {
+	-fx-background-color:
+	    linear-gradient(#6b6b6b, #020b02);
+}
+
+#app-toolbar {
+	-fx-background-color:
+	    linear-gradient(#408DD2, #043A6B);
+	-fx-padding: 5.0px;
+}
+

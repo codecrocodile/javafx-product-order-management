@@ -1,0 +1,6 @@
+See the following about database connections for cloud sql:
+
+https://developers.google.com/cloud-sql/docs/external
+
+Note that it is a different driver than the one used for google app engine. Connection pooling is NOT recommened so org.springframework.jdbc.datasource.DriverManagerDataSource
+should be ok for or requirements.
